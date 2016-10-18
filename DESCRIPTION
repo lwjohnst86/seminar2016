@@ -4,13 +4,29 @@ Version: 0.0.0.9000
 Authors@R: person("Luke", "Johnston", email = "lwjohnst@gmail.com", role = c("aut", "cre"))
 Description: Contains my slides and data analysis code for my PhD seminar
     presentation for the Fall term 2016.
-Depends: R (>= 3.3.1)
+Depends:
+    R (>= 3.3.1)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Suggests: knitr,
+Suggests:
+    knitr,
     rmarkdown
 VignetteBuilder: knitr
-Imports: devtools
+Imports:
+    devtools,
+    dplyr,
+    stats,
+    mason,
+    seer,
+    broom,
+    ggplot2,
+    ggthemes,
+    tidyr,
+    DiagrammeR,
+    DiagrammeRsvg,
+    rsvg
 URL: https://github.com/lwjohnst86/seminar2016
 BugReports: https://github.com/lwjohnst86/seminar2016/issues
+Remotes: lwjohnst86/seer
+RoxygenNote: 5.0.1
