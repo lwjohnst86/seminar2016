@@ -1,7 +1,14 @@
 ---
-title: "**Title**"
-bibliography: path/to/bib/file
-csl: path/to/bib/style/file
+title: "**Fatty acid composition in four lipid fractions and the pathogenesis of diabetes**"
+author: Luke Johnston
+date: >
+    Grand Finale
+    
+    2016-10-27
+bibliography: 
+    - /home/luke/Documents/bibliography/bib/bib-db/tagDiabetes.bib
+    - /home/luke/Documents/bibliography/bib/bib-db/myrefs.bib
+    - /home/luke/Documents/bibliography/bib/bib-db/methods.bib
 fontsize: 9pt
 classoption: xcolor=dvipsnames
 output:
@@ -12,39 +19,267 @@ output:
         in_header: template.tex
 ---
 
-<!-- slide 1 -->
-## Disclosures ##
+<!--
 
-## Introduction slide ##
+Story:
+- My story of how I went from NEFA -> to all fractions, how coding was the thing
+that allowed this to happen
+- Draw in coding, my code, show the code (maybe)
 
-* This is a footer[^footer]
+Outline:
+- Title
+- Revised title (after learning coding)
+- blank (brief talk about coding and doing more fractions, gaps in lit)
+- image of lipoprotein, describe lipid fractions (phys draw it first)
+- image of beta-cells + insulin signaling, how lipids can influence these (phys draw it first)
+- previous lit? brief
+- Objectives (I already mentioned gaps at start), emph exploratory nature
+    - Briefly mention NEFA, PL, CE fraction results, state going over TAG
+- PROMISE
+- Statistics
+    - GEE
+    - p-values (getting around that using FDR)
+    - PLS
+    - CV
+- Code (image of Nature news articles, the two of them), link to GitHub
+- Results
+- Image of GEE models (non-FDR vs FDR pval < 0.05)
+- Image of PLS results (with cor of predictive)
+- (optional) Other images? Of other fractions?
+- Interpretation (?)
+- Implication/conclusion
+
+Put image of Nature commentary about putting code online and about scientists using GitHub.
+
+
+- Emphasize TAG pool and associations with outcomes + MetS components
+- Briefly mention other pools
+- Go over TAG biology briefly
+- Go through number of GEE models and how FDR reduces false discovery
+- Show TAG GEE and PLS results for outcomes
+- Try to describe PLS as best I can and how techniques like these are very
+powerful, especially for prediction
+- Include bit about code available to look over via github
+
+functions to create:
+
+- analyze_gee
+- plot_gee
+- pls_data_prep
+- analyze_pls
+- plot_pls
+
+-->
+
+```{r setup, include=FALSE}
+devtools::load_all()
+```
+
+## Original title
+- Revised title (after learning coding)
+
+##
+
+- blank (brief talk about coding and doing more fractions, gaps in lit)
+
+## Physiology of serum lipid fractions
+
+- image of lipoprotein, describe lipid fractions (phys draw it first)
+
+##
+
+- image of beta-cells + insulin signaling, how lipids can influence these (phys draw it first)
+- previous lit? brief
+
+## Objectives:
+
+Explore associations of fatty acid composition of serum lipid fractions on
+diabetes pathogenesis:
+
+<!-- Emphasis exploration. "in many ways, my research is like an astronomer
+looking at the sky trying to make sense of it all. Many of the fatty acids I
+examine don't have a well defined physiological role as several are difficult to
+experimentally study"
+
+The last seminar I presented three of the lipid fractions, which I'll briefly
+mention the results here, but I hadn't finished analyzing the TAG fraction. This
+is the fraction which I will be showing today.
+-->
 
 . . .
 
-* You can use citations using the syntax `@AuthorYear`, based on your
-  BibKey in your `.bib` file.
+>- NEFA: *Higher total NEFA, not individual fatty acids, contribute to lower
+beta-cell function*
+>- PL: *Higher palmitic acid associates with **declines** in beta-cell function
+over time. Higher cis-vaccenic acid associated with higher insulin sensitivity and beta-cell function.*
+>- CE: *No strong associates with diabetes pathogenesis*
+>- TAG: ...
 
-[^footer]: Footer text
+## Data source: The PROMISE cohort
 
-```{r setup, message = FALSE, echo = FALSE}
-source('.Rprofile')
-run_setup()
-load_data('/path/to/master/dataset/')
-dim(ds)
+PROspective Metabolism and ISlet cell Evaluation cohort.
+
+- Recruited from London and Toronto centers
+- Followed every ~3 years (3 time points completed)
+- Demographics, lifestyle, anthropometrics, and blood
+
+## Variables of interest
+
+### Metabolic outcomes
+
+Calculated from OGTT:
+
+- Insulin sensitivity: 1/HOMA-IR, ISI
+- Beta-cell function: IGI/HOMA-IR, ISSI-2
+
+. . .
+
+### TAG fatty acids
+
+Thin layer chromatography to split the lipid fractions, gas chromatography for
+the fatty acids:
+
+- 22 TAG fatty acids
+
+## Statistical analysis code: https://github.com/lwjohnst86/seminar2016
+
+. . .
+
+```{r img_share_code, out.width='250px', echo=FALSE, fig.align='center'}
+knitr::include_graphics('../img/share-code.png')
 ```
 
-```{r caption_setup}
-## Include captions below using `captioner` package
-figNums <- captioner(prefix = 'Figure')
-tabNums <- captioner(prefix = 'Table')
+```{r img_github_science, out.width='250px', echo=FALSE, fig.align='center'}
+knitr::include_graphics('../img/github-science.png')
 ```
 
-```{r inlineCode, results = 'hide'}
+## Statistical analysis: Generalized estimating equations (GEE)
 
+- Allow for longitudinal design
+- Similar to linear regression
+- Variables GEE model:
+    - Visit number, waist size, baseline age, ethnicity, sex, ALT (marker of
+    liver fat), physical activity (MET), and total NEFA
+    - Time-*independent*: TAGFA, NEFA, baseline age, ethnicity, sex
+
+. . .
+
+>- Concern: multiple models will be computed = more p-values
+>- P-values: generally unreliable, misunderstood, and inflated with more tests[^1]
+>- Adjust using False Discovery Rate (FDR) correction
+
+<!--
+```{r img_pvalue_problem, out.width='250px', echo=FALSE, fig.align='center', fig.cap='Prof. David Colquhuon'}
+knitr::include_graphics('../img/p-values.png')
+```
+-->
+
+[^1]: See the [American Statistical Association statement on it](http://amstat.tandfonline.com/doi/abs/10.1080/00031305.2016.1154108)
+
+```{r gee_model}
+fit <- analyze_gee()
+num_sig <- paste0(nrow(dplyr::filter(fit, unadj.p.value < 0.05)),
+                  " non-FDR vs ",
+                  nrow(dplyr::filter(fit, p.value < 0.05)),
+                  " FDR")
 ```
 
-## Acknowledgements ##
+## As nmol/mL, strong negative association with IS (note: `r num_sig`)
 
-## References ##
+```{r gee_model_conc, fig.width=6, fig.height=4.5}
+fit %>% 
+    dplyr::filter(unit %in% c('Totals', 'nmol/mL')) %>% 
+    plot_gee_main()
+```
 
-\tiny
+## As mol%, very different story --- different FA have positive or negative roles
+
+```{r gee_model_mol, fig.width=6, fig.height=4.5}
+fit %>% 
+    dplyr::filter(unit %in% c('Totals', 'mol%')) %>% 
+    plot_gee_main()
+```
+
+## But... GEE modeling is flawed
+
+- TAG fatty acid composition in inherently multivariate
+
+. . .
+
+```{r fig_fattyacid_dnl}
+grViz_Rmd("
+digraph {
+    node [shape = none]
+    subgraph {
+    rank = min; '14:0'; '16:0'; '18:0'; '20:0'
+    }
+    subgraph {
+    rank = max; '14:1n7'; '16:1n7'; '18:1n9'
+    }
+    '14:0' -> {'16:0', '14:1n7'}; '16:0' -> {'18:0', '16:1n7'}
+    '18:0' -> {'18:1n9', '20:0'}; '14:1n7' -> '16:1n7'
+}
+")
+```
+
+<!-- since each model can only include one TAG fatty acid, it ignores the
+inherent fact that fatty acids can be converted from one length or saturation to
+another through DNL. And so they are inherently linked to one another -->
+
+## Correlation between TAG fatty acids
+
+```{r fig_heatmap}
+analyze_corr() %>% 
+    plot_heatmap()
+```
+
+
+## Partial Least Squares (PLS) allows for multivariate data
+
+Takes:
+
+$$ISI = 140 + 141n7 + ... + 225n3$$
+
+Converts to:
+
+$$ISI = Comp1 + Comp2$$
+
+. . .
+
+>- PLS: No p-value, no p-value problem
+>- Cross-validation (CV) determines predictability
+    - CV splits data into training and test sets
+>- Flaw: Can only use one time point (cross-sectional)
+
+## Four long chain fatty acids (14:0, 14:1n-7, 16:0, 16:1n-7) cluster and strongly explain the variance in metabolic function
+
+```{r fig_pls, fig.width=7, fig.height=4}
+fit_is <- analyze_pls(y = 'lISI', ncomp = 2)
+pred_is <- paste0(
+    calc_pred_corr(fit_is, fit_is$test_data, ncomp = 1)$r,
+    '-',
+    calc_pred_corr(fit_is, fit_is$test_data, ncomp = 2)$r
+)
+fit_bcf <- analyze_pls(y = 'lISSI2', ncomp = 2)
+pred_bcf <- paste0(
+    calc_pred_corr(fit_bcf, fit_bcf$test_data, ncomp = 1)$r,
+    '-',
+    calc_pred_corr(fit_bcf, fit_bcf$test_data, ncomp = 2)$r
+)
+gridExtra::grid.arrange(
+    plot_pls(fit_is) + ggplot2::ggtitle(paste0('A: ISI\nPredictive: r = ', pred_is)), 
+    plot_pls(fit_bcf) + ggplot2::ggtitle(paste0('B: ISSI-2\nPredictive: r = ', pred_bcf)), 
+    ncol = 2)
+```
+
+## FA involved in DNL from higher carb intake associate with lower metabolic functioning
+
+PRevious lit
+
+## Conclusions on observed findings
+
+Each lipid fraction behaves slightly differently on metabolic functioning
+
+
+
+- Implication/conclusion
