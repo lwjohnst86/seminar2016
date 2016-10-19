@@ -2,9 +2,9 @@
 title: "**Fatty acid composition in four lipid fractions and the pathogenesis of diabetes**"
 author: Luke Johnston
 date: >
-    Grand Finale
+    Grand Finale  
     
-    2016-10-27
+    Oct. 27th, 2016
 bibliography: 
     - /home/luke/Documents/bibliography/bib/bib-db/tagDiabetes.bib
     - /home/luke/Documents/bibliography/bib/bib-db/myrefs.bib
@@ -49,9 +49,6 @@ Outline:
 - Interpretation (?)
 - Implication/conclusion
 
-Put image of Nature commentary about putting code online and about scientists using GitHub.
-
-
 - Emphasize TAG pool and associations with outcomes + MetS components
 - Briefly mention other pools
 - Go over TAG biology briefly
@@ -59,15 +56,6 @@ Put image of Nature commentary about putting code online and about scientists us
 - Show TAG GEE and PLS results for outcomes
 - Try to describe PLS as best I can and how techniques like these are very
 powerful, especially for prediction
-- Include bit about code available to look over via github
-
-functions to create:
-
-- analyze_gee
-- plot_gee
-- pls_data_prep
-- analyze_pls
-- plot_pls
 
 -->
 
@@ -78,18 +66,19 @@ devtools::load_all()
 ## Original title
 - Revised title (after learning coding)
 
-##
-
-- blank (brief talk about coding and doing more fractions, gaps in lit)
-
 ## Physiology of serum lipid fractions
 
-- image of lipoprotein, describe lipid fractions (phys draw it first)
+```{r lipid_pools}
+knitr::include_graphics('../img/lipid-fractions.pdf')
+```
 
-##
+## Glucose metabolism
 
-- image of beta-cells + insulin signaling, how lipids can influence these (phys draw it first)
-- previous lit? brief
+```{r glucose_metabolism}
+knitr::include_graphics('../img/glucose-metabolism.pdf')
+```
+
+## Previous literature
 
 ## Objectives:
 
@@ -168,12 +157,6 @@ knitr::include_graphics('../img/github-science.png')
 >- P-values: generally unreliable, misunderstood, and inflated with more tests[^1]
 >- Adjust using False Discovery Rate (FDR) correction
 
-<!--
-```{r img_pvalue_problem, out.width='250px', echo=FALSE, fig.align='center', fig.cap='Prof. David Colquhuon'}
-knitr::include_graphics('../img/p-values.png')
-```
--->
-
 [^1]: See the [American Statistical Association statement on it](http://amstat.tandfonline.com/doi/abs/10.1080/00031305.2016.1154108)
 
 ```{r gee_model}
@@ -228,7 +211,7 @@ another through DNL. And so they are inherently linked to one another -->
 
 ## Correlation between TAG fatty acids
 
-```{r fig_heatmap}
+```{r fig_heatmap, fig.width=6, fig.height=4.5}
 analyze_corr() %>% 
     plot_heatmap()
 ```
@@ -274,7 +257,7 @@ gridExtra::grid.arrange(
 
 ## FA involved in DNL from higher carb intake associate with lower metabolic functioning
 
-PRevious lit
+Previous lit
 
 ## Conclusions on observed findings
 
@@ -282,4 +265,18 @@ Each lipid fraction behaves slightly differently on metabolic functioning
 
 
 
-- Implication/conclusion
+## Acknowledgements
+
+- **Supervisor:** Dr. Anthony Hanley
+- **Co-Supervisor:** Dr. Richard Bazinet
+- **Committee Member:** Dr. Adria Giacca
+- **Hanley Lab:** Ingrid Santaren, Zhila Semnani-Azad, Windy Wang
+- **Research Nurses:** Jan Neuman, Paula Van Nostrand, Stella Kink,
+  Annette Barnie, Sheila Porter, Mauricio Marin
+- **Funding:** CDA, CIHR, BBDC
+
+\image[width=0.2\linewidth]{/home/luke/Pictures/logo/CDA-logo2010}
+\hspace{1cm}
+\image[width=0.2\linewidth]{/home/luke/Pictures/logo/CIHRlogos2013-Small}
+\hspace{1cm}
+\image[width=0.3\linewidth]{/home/luke/Pictures/logo/BBDC-logo}
