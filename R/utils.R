@@ -24,7 +24,7 @@ graph_theme <- function(base.plot, ticks = TRUE, minor.grid.lines = FALSE, legen
                 legend.key.width = grid::unit(0.7, "line"),
                 legend.key.height = grid::unit(0.7, "line"),
                 strip.background = ggplot2::element_blank(),
-                plot.margin = grid::unit(c(0.5, 0, 0, 0), "cm"),
+                plot.margin = grid::unit(c(0, 0, 0.5, 0), "cm"),
                 legend.position = legend.pos
             )
         )
