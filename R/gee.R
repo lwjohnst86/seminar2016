@@ -121,12 +121,14 @@ analyze_gee <- function(data = project_data,
 #' @export
 plot_gee_main <- function(results) {
     results %>%
+        dplyr::mutate(p.value = ifelse(p.value > 0.05, 1, 0.04)) %>%
         seer::view_main_effect(
             graph.options = 'dot.size',
             groups = 'unit~Yterms',
-            legend.title = 'FDR-adjusted\np-value',
+            legend.title = 'FDR\nadjusted\np-values',
             xlab = 'Percent difference with 95% CI in the outcomes\nfor each SD increase in fatty acid',
             ylab = 'Triacylglycerol fatty acids'
             ) +
-        graph_theme(ticks = FALSE)
+        graph_theme(ticks = FALSE, legend.pos = 'right') +
+        ggplot2::theme(legend.margin = grid::unit(0, 'cm'))
 }
