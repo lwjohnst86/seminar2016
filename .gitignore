@@ -3,4 +3,6 @@
 .RData
 inst/doc
 data/
+*_cache/
+man/
 
