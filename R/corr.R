@@ -13,13 +13,8 @@ analyze_corr <-
     function(data = project_data,
              x = tg_pct) {
 
-        name_order <- substr(x, nchar(x), nchar(x))
-        name_order <- as.integer(name_order)
-        name_order <- x[order(name_order)]
-
     data %>%
         dplyr::filter(VN == 0) %>%
-        dplyr::select_(.dots = x) %>%
         mason::design('cor') %>%
         mason::add_settings(method = 'pearson', use = 'complete.obs', hclust.order = TRUE) %>%
         mason::add_variables('xvars', x) %>%
