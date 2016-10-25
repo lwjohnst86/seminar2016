@@ -1,0 +1,43 @@
+---
+output: word_document
+---
+
+Words: 270 / 250
+
+**Fatty acid (FA) composition in four serum lipid fractions and the pathogenesis
+of diabetes: The Prospective Metabolism and Islet Cell Evaluation (PROMISE)
+cohort**
+
+Luke W. Johnston
+
+**Background:** Evidence suggests specific FAs within serum lipid fractions
+contribute uniquely to the risk for diabetes. However, limited longitudinal data
+exist on the role of the FA composition in different lipid fractions and the
+underlying pathogenesis of diabetes. Our aim was to study the longitudinal
+associations of FA composition in four lipid fractions with 6-yr changes in
+insulin sensitivity (IS) and beta-cell function.
+
+**Methods:** Adults at-risk for diabetes in PROMISE had glucose and insulin
+measured from an oral glucose tolerance test at 3 visits over 6-yrs (n=477).
+Baseline fasting FA in phospholipid (PL), cholesteryl ester, triacylglycerol
+(TAGFA), and non-esterified (NEFA) fractions were quantified using
+thin-layer-chromatography and gas-chromatography.  The inverse of HOMA-IR
+(1/HOMA-IR) and the Matsuda index assessed IS; the Insulinogenic Index over
+HOMA-IR (IGI/IR) and the Insulin Secretion-Sensitivity Index-2 (ISSI-2) assessed
+beta-cell function.  Partial least squares and generalized estimating equations
+was conducted adjusting for visit, sex, ethnicity, baseline age, waist, NEFA,
+and ALT.
+
+**Results:** IS and beta-cell function declined by 14-27% over 6-yrs.  Total
+NEFA associated negatively with beta-cell function. In PL, *cis*-vaccenate
+associated positively with IS while palmitate associated with declines in
+beta-cell function. Four TAGFA (14:0, 16:0, 14:1n7, 16:1n17) clustered together
+to associate with lower IS. Monounsaturated TAGFA tended to associate positively
+with IS.
+
+**Conclusions:** These findings reveal fraction and FA specific associations
+with core abnormalities underlying diabetes, providing a comprehensive view of
+FA in diabetes pathogenesis. In particular, within the TAGFA, the FA cluster may
+be indicative of higher de novo lipogenesis of carbohydrates. We hope the
+results encourage further research on the FA with particularly strong
+associations, as many of these FA are not well studied.
