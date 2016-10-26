@@ -1,8 +1,8 @@
 ---
-title: "**Fatty acid composition in four lipid fractions and the pathogenesis of diabetes**"
+title: "**Fatty acid composition in four serum lipid fractions and the pathogenesis of diabetes**"
 author: Luke Johnston
 date: >
-    Grand Finale  
+    Grand Finale (4th)  
     
     Oct. 27th, 2016
 bibliography: 
@@ -19,19 +19,13 @@ output:
             in_header: template.tex
 ---
 
-## Original title
+## Physiology of serum lipid fractions
+
+<!-- Other seminars were about the other lipid fractions, this one about TAG -->
 
 ```{r setup, include=FALSE}
 devtools::load_all()
 ```
-
-\textbf{\Large{Serum Composition of Non-Esterified Fatty Acids in the Progression of
-Metabolic Abnormalities Underlying Type 2 Diabetes}}
-
-<!-- some introduction.. like "we know diabetes is an important public health
-concern" -->
-
-## Physiology of serum lipid fractions
 
 ```{r lipid_pools}
 knitr::include_graphics('../img/lipid-fractions.pdf')
@@ -43,12 +37,12 @@ knitr::include_graphics('../img/lipid-fractions.pdf')
 knitr::include_graphics('../img/glucose-metabolism.pdf')
 ```
 
-## Fatty acid length and desaturation
+## Various fatty acid length and desaturation
 
 <!-- include image here -->
 
 - Range in length and number of double bonds
-- Fatty acids either from diet or *de novo* (DNL)
+- Fatty acids either from diet or *de novo* lipogenesis (DNL)
 - Physiological role dependent on molecule
 - Eg: higher palmitic acid (16:0) lipotoxic to beta-cells *in vivo* and *in
 vitro*[^lit]
@@ -57,11 +51,14 @@ vitro*[^lit]
 
 ## Few large cohorts on fatty acid composition, fraction, and diabetes
 
-- One study had three fractions: TAG, PL, CE[^key]
+- One study (METSIM) had three fractions: TAG, PL, CE[^key]
     - Multiple flaws <!-- stats, design, presentation -->
 - Mainly cohorts report on PL and CE: CHS, EPIC, ARIC[^cohorts]
     - 16:0 and 18:0 higher risk for DM
     - 18:1n-7, 18:1n-9, 18:3n-3 lower risk for DM
+<!-- Other fractions a bit harder to quantify -->
+
+<!-- we know quite a bit about how hypertriglyceridemia associates with diabetes -->
 
 [^key]: @Lankinen2015a
 [^cohorts]: @Wang2003a; @Forouhi2014a; @Kroger2011a; @Ma2015a; @Djousse2011a
@@ -136,17 +133,16 @@ the fatty acids:
 plot_tagfa()
 ```
 
-
-## Statistical analysis code: https://github.com/lwjohnst86/seminar2016
+## Statistical analysis
 
 . . .
 
+### R code for these results:
+
+https://github.com/lwjohnst86/seminar2016
+
 ```{r img_share_code, out.width='250px', echo=FALSE, fig.align='center'}
 knitr::include_graphics('../img/share-code.png')
-```
-
-```{r img_github_science, out.width='250px', echo=FALSE, fig.align='center'}
-knitr::include_graphics('../img/github-science.png')
 ```
 
 ## Statistical analysis: Generalized estimating equations (GEE)
@@ -158,13 +154,13 @@ Variables GEE model:
 > Visit number, waist size, baseline age, ethnicity, sex, ALT (marker of liver
 fat), physical activity (MET), and total NEFA.
 
-Time-*independent*: TAGFA, NEFA, baseline age, ethnicity, sex
+Time-*independent*: TAG, NEFA, baseline age, ethnicity, sex
 
 . . .
 
 >- Concern: multiple models will be computed
 >- P-values: generally unreliable, especially with more tests[^1]
->- Adjust using False Discovery Rate (FDR) correction
+>- Adjust using BH False Discovery Rate (FDR) correction
 
 <!-- false negative -->
 
@@ -180,6 +176,8 @@ num_sig <- paste0(nrow(dplyr::filter(fit, unadj.p.value < 0.05)),
 
 ## As conc, strong negative association with IS (`r num_sig` of `r nrow(fit)` models)
 
+<!-- may be due to hypertriglyceridemioa -->
+
 ```{r gee_model_conc, fig.width=6, fig.height=4.5}
 fit %>% 
     dplyr::filter(unit %in% c('Totals', 'nmol/mL')) %>% 
@@ -194,7 +192,10 @@ fit %>%
     plot_gee_main()
 ```
 
-## But... GEE modeling is flawed
+## But... GEE modeling is limited
+
+<!-- even with sophistication, still limited, only a single model per FA -->
+<!-- doesn't capture multivariate nature -->
 
 - TAG fatty acid composition in inherently multivariate
 
@@ -242,8 +243,8 @@ $$ISI = Comp1 + Comp2$$
 
 >- PLS: No p-value, no p-value problem
 >- Cross-validation (CV) determines predictability
-    - CV splits data into training and test sets
->- Flaw: Can only use one time point (cross-sectional)
+    - CV randomly splits data into training and test sets
+>- Limitation: Can only use one time point (cross-sectional) and no covariates
 
 ## Four long chain fatty acids (14:0, 14:1n-7, 16:0, 16:1n-7) cluster and strongly explain the variance in metabolic function
 
@@ -270,6 +271,7 @@ gridExtra::grid.arrange(
 
 - Upregulated DNL, increased 14 and 16 chain fatty acids[^dnl]
     - 16:1n-7 shown to be highly related to directly measured DNL
+    - Shown to be lipotoxic
 
 . . .
 
@@ -288,6 +290,7 @@ nature of the data -->
 
 - Each lipid fraction behaves slightly differently on metabolic functioning
 - Fatty acids from DNL may contribute to metabolic dysfunction
+- Potential biomarker of DNL fatty acids for clinical use
 
 . . .
 
@@ -302,6 +305,8 @@ nature of the data -->
 - **Research Nurses:** Jan Neuman, Paula Van Nostrand, Stella Kink,
   Annette Barnie, Sheila Porter, Mauricio Marin
 - **Funding:** CDA, CIHR, BBDC
+
+Code: https://github.com/lwjohnst86/seminar2016
 
 \image[width=0.2\linewidth]{/home/luke/Pictures/logo/CDA-logo2010}
 \hspace{1cm}
