@@ -96,14 +96,10 @@ and beta-cell function.*
 ### PROspective Metabolism and ISlet cell Evaluation cohort.
 
 - Recruited from London and Toronto centers
+- At-risk for diabetes
 - Followed every ~3 years (3 time points completed)
 - Demographics, lifestyle, anthropometrics, and blood
-
-##
-
-```{r consort, fig.align='center', out.height='250px'}
-knitr::include_graphics('../img/consort.pdf')
-```
+- n=**477** participants with fatty acids measured
 
 ## Variables of interest
 
@@ -176,6 +172,8 @@ num_sig <- paste0(nrow(dplyr::filter(fit, unadj.p.value < 0.05)),
 
 ## As conc, strong negative association with IS (`r num_sig` of `r nrow(fit)` models)
 
+. . .
+
 <!-- may be due to hypertriglyceridemioa -->
 
 ```{r gee_model_conc, fig.width=6, fig.height=4.5}
@@ -243,7 +241,7 @@ $$ISI = Comp1 + Comp2$$
 
 >- PLS: No p-value, no p-value problem
 >- Cross-validation (CV) determines predictability
-    - CV randomly splits data into training and test sets
+>- CV randomly splits data into training and test sets
 >- Limitation: Can only use one time point (cross-sectional) and no covariates
 
 ## Four long chain fatty acids (14:0, 14:1n-7, 16:0, 16:1n-7) cluster and strongly explain the variance in metabolic function
@@ -290,7 +288,7 @@ nature of the data -->
 
 - Each lipid fraction behaves slightly differently on metabolic functioning
 - Fatty acids from DNL may contribute to metabolic dysfunction
-- Potential biomarker of DNL fatty acids for clinical use
+- DNL fatty acids may be useful biomarker for clinical use
 
 . . .
 
@@ -308,11 +306,11 @@ nature of the data -->
 
 Code: https://github.com/lwjohnst86/seminar2016
 
-\image[width=0.2\linewidth]{/home/luke/Pictures/logo/CDA-logo2010}
+\image[width=0.2\linewidth]{../img/CDA-logo2010}
 \hspace{1cm}
-\image[width=0.2\linewidth]{/home/luke/Pictures/logo/CIHRlogos2013-Small}
+\image[width=0.2\linewidth]{../img/CIHRlogos2013-Small}
 \hspace{1cm}
-\image[width=0.3\linewidth]{/home/luke/Pictures/logo/BBDC-logo}
+\image[width=0.3\linewidth]{../img/BBDC-logo}
 
 ## References
 
